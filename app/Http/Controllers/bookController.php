@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\book;
 use Illuminate\Support\Facades\DB;
 
+
 class bookController extends Controller
 {
     /**
@@ -32,6 +33,7 @@ class bookController extends Controller
         }else{
             $books = book::all();
         }
+        
         return view('books',['books'=>$books]);
         
     }

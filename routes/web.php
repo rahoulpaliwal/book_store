@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\bookController;
 use App\Http\Controllers\profileController;
+use App\Http\Controllers\usersController;
 
 
 // Route::get('/', function () {
@@ -35,6 +36,7 @@ Route::get('/profile/{email}', [profileController::class, 'index']);
 Route::get('/profile/edit/{id}', [profileController::class, 'edit']);
 Route::post('/profile/update/{id}', [profileController::class, 'update']);
 
+Route::get('users', [usersController::class, 'index']);
 
 // Route::get('/profile/{email}', function ($email) {
 //     $emails = book::find($email);

@@ -40,6 +40,14 @@
                 <input type="text" name="book_price" placeholder="Book Price" class="form-control my-2">
                 <input type="text" name="book_author" placeholder="Book Author" class="form-control my-2">
 
+                <input type="text" name="book_author" placeholder="Options" class="form-control my-2">
+
+                {{-- <select class="custom-select" id="inputGroupSelect01">
+                    <option selected>Choose...</option>
+                    @foreach ($books as $book)
+                    <option value="1">{{$book->book_name}}</option>
+                    @endforeach
+                  </select> --}}
                 <div class="form-group">
                     <button class="btn btn-success">Update</button>
                 </div>
@@ -76,8 +84,11 @@
                     </tr>
 
                     @endforeach
+
                 </tbody>
             </table>
+            
+                
         </div>
 
 
