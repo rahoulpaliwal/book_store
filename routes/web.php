@@ -23,6 +23,9 @@ use App\Http\Controllers\usersController;
 // });
 
 Auth::routes();
+
+
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('books', [bookController::class, 'index'])->name('books');
@@ -38,6 +41,9 @@ Route::post('/profile/update/{id}', [profileController::class, 'update']);
 
 Route::get('users', [usersController::class, 'index']);
 
+// Route::get('/login1', function () {
+//     return view('authentication.login');
+// });
 // Route::get('/profile/{email}', function ($email) {
 //     $emails = book::find($email);
 //     return view('profile',['email'=>$email]);
