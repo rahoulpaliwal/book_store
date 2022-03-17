@@ -30,9 +30,10 @@
             <form action="books" method="POST" enctype="multipart/form-data">
                 @csrf
                 {{-- <input type="file" name="book_image" placeholder="Book Image" class="btn btn-success"> --}}
-                <p><input type="file" accept="image/*" name="book_image" id="file" onchange="loadFile(event)"
-                        style="display: none;"></p>
-                <p><label for="file" style="cursor: pointer;"class="btn btn-success">Upload Image</label></p>
+                <p><input type="file" accept="image/*" name="book_image" id="file" onchange="loadFile(event)" style="display: none;"></p>
+                <p>
+                    <label for="file" style="cursor: pointer;" class="btn btn-success">Upload Image</label>
+                </p>
                 <p class="align-item-center"><img id="output" width="200" /></p>
 
 
