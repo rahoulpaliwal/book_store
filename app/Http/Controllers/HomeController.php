@@ -14,7 +14,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $books = book::all();
+        if(isset($_GET['searchText'])){
+            $searchText = $_GET['searchText'];
+            $books = book::where('book_name','LIKE','%'.$searchText.'%')->get();
+            return view('home',['books'=>$books]);
+        }else{
+            $books = book::all();
+        }
         return view('home',['books'=>$books]);
     }
 

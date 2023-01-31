@@ -41,7 +41,9 @@
                 <input type="text" name="book_price" placeholder="Book Price" class="form-control my-2">
                 <input type="text" name="book_author" placeholder="Book Author" class="form-control my-2">
 
-                <input type="text" name="book_author" placeholder="Options" class="form-control my-2">
+                <input type="text" name="isbn" placeholder="ISBN" class="form-control my-2">
+                <input type="date" name="publication_date" placeholder="publication_date" class="form-control my-2">
+                <input type="text" name="genre" placeholder="genre" class="form-control my-2">
 
                 {{-- <select class="custom-select" id="inputGroupSelect01">
                     <option selected>Choose...</option>
@@ -75,7 +77,7 @@
                         <th scope="row">{{$book->bid}}</th>
                         <th scope="row">{{$book->book_name}}</th>
                         <th scope="row">{{$book->book_price}}</th>
-                        <th scope="row">{{$book->book_auther}}</th>
+                        <th scope="row">{{$book->book_author}}</th>
                         <th scope="row">
                             <a href="/books/edit/{{$book->bid}}" class="btn btn-primary">Edit</a>
                             <a href="/books/delete/{{$book->bid}}" class="btn btn-danger">Delete</a>

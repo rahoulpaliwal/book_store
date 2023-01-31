@@ -15,10 +15,14 @@ class CreateBooksTable extends Migration
     {
         Schema::create('books', function (Blueprint $table) {
             $table->id('bid');
+            $table->string('isbn')->unique();
             $table->string('book_name');
-            $table->string('book_price');
-            $table->string('book_auther');
+            $table->string('publication_date');
+            $table->string('book_author');
             $table->string('book_image');
+            $table->float('book_price');
+            $table->string('genre');
+            $table->timestamps();
         });
     }
 

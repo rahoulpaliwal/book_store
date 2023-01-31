@@ -44,9 +44,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{url('/home')}}">Home</a>
                     </li>
+                    @if(Auth::user()->role=='admin')
                     <li class="nav-item">
                         <a class="nav-link" href="{{url('/books')}}">Books</a>
                     </li>
+                    @endif
                     {{-- <form class="form-inline d-flex text-center">
                         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>

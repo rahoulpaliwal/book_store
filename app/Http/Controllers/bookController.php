@@ -31,6 +31,7 @@ class bookController extends Controller
             $books = book::where('book_name','LIKE','%'.$searchText.'%')->get();
             return view('books',['books'=>$books]);
         }else{
+            //$data = Http::get('https://fakerapi.it/api/v1/books?_quantity=100')->json();
             $books = book::all();
         }
         
@@ -59,7 +60,10 @@ class bookController extends Controller
         $b1 = new book;
         $b1->book_name = $request->book_title;
         $b1->book_price = $request->book_price;
-        $b1->book_auther = $request->book_author;
+        $b1->book_author = $request->book_author;
+        $b1->isbn = $request->isbn;
+        $b1->publication_date = $request->publication_date;
+        $b1->genre = $request->genre;
         if($request->hasfile('book_image')){
             $file = $request->file('book_image');
             $ext = $file->getClientOriginalExtension();
@@ -99,6 +103,15 @@ class bookController extends Controller
         // $books = book::all();
     }
 
+    public function details($id)
+    {
+        $books = book::find($id);
+        return view('detailPage',['books'=>$books]);
+        // return view('updateBook',['books'=>$books]);
+
+        // $books = book::all();
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -109,10 +122,12 @@ class bookController extends Controller
     public function update(Request $request, $id)
     {   
         $books=book::find($id);
-        $books->bid = $request->book_id;
         $books->book_name = $request->book_title;
         $books->book_price = $request->book_price;
-        $books->book_auther = $request->book_author;
+        $books->book_author = $request->book_author;
+        $books->isbn = $request->isbn;
+        $books->genre = $request->genre;
+        $books->publication_date = $request->publication_date;
         $books->save();
         return redirect('books');
     }
@@ -130,6 +145,4 @@ class bookController extends Controller
         return redirect('books');
     }
 
-
-    
 }

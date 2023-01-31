@@ -32,6 +32,7 @@ Route::get('books', [bookController::class, 'index'])->name('books');
 Route::post('books', [bookController::class, 'store']);
 Route::get('/books/delete/{id}', [bookController::class, 'destroy']);
 Route::get('/books/edit/{id}', [bookController::class, 'edit']);
+Route::get('/books/details/{id}', [bookController::class, 'details']);
 Route::post('/books/update/{id}', [bookController::class, 'update']);
 Route::get('search', [bookController::class, 'search']);
 
