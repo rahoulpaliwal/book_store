@@ -9,8 +9,8 @@
 
     {{-- <title>{{ config('app.name', 'laravel') }}</title> --}}
     <title>@yield('title')</title>
-
     <!-- Scripts -->
+    <script src="{{ asset('js/jquery.js') }}" ></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
@@ -40,10 +40,10 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                     @guest
-                @else
                     <li class="nav-item">
                         <a class="nav-link" href="{{url('/home')}}">Home</a>
                     </li>
+                @else
                     @if(Auth::user()->role=='admin')
                     <li class="nav-item">
                         <a class="nav-link" href="{{url('/books')}}">Books</a>
@@ -138,6 +138,5 @@
               </div>
             </div>
             </div>
-
 </body>
 </html>

@@ -28,12 +28,17 @@ Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/home/book-details/{id}', [homeController::class, 'details']);
+Route::get('/ajax-search','HomeController@search');
+Route::get('/search-home', [homeController::class, 'searchHome']);
+
+
 Route::get('books', [bookController::class, 'index'])->name('books');
 Route::post('books', [bookController::class, 'store']);
 Route::get('/books/delete/{id}', [bookController::class, 'destroy']);
 Route::get('/books/edit/{id}', [bookController::class, 'edit']);
-Route::get('/books/details/{id}', [bookController::class, 'details']);
 Route::post('/books/update/{id}', [bookController::class, 'update']);
+
 Route::get('search', [bookController::class, 'search']);
 
 Route::get('/profile/{email}', [profileController::class, 'index']);

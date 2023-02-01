@@ -7,7 +7,7 @@
 @section('content')
 <section class="section-pagetop ">
         <div class="container clearfix">
-            <h2 class="title-page">{{ $books->book_name }}</h2>
+            <h2 class="title-page">{{ isset($books['book_name']) ? $books['book_name'] : $books['title'] }}</h2>
         </div>
     </section>
     <section class="section-content bg padding-y border-top" id="site">
@@ -19,25 +19,29 @@
                             <aside class="col-sm-5 border-right">
                                 <article class="gallery-wrap">
                                         <div class="img-small-wrap">
-                                        <img class="card-img-top" src="{{asset('images/'.$books->book_image)}}" alt="Card image cap" width="50px" height="250px">
+                                        @if(isset($books['book_image']))
+                                            <img class="card-img-top" src="{{asset('images/'.$books['book_image'])}}" alt="Card image cap" width="50px" height="250px">
+                                        @else
+                                            <img class="card-img-top" src="{{$books['image']}}" alt="Card image cap" width="50px" height="250px">
+                                        @endif
                                         </div>
                                 </article>
                             </aside>
                             <aside class="col-sm-7">
                                 <article class="p-5">
-                                    {{-- <h3 class="title mb-3">{{ $books->book_name }}</h3> --}}
+                                    {{-- <h3 class="title mb-3">{{ isset($books['book_name']) ? $books['book_name'] : $books['title'] }}</h3> --}}
                                     <dl class="row">
                                         <dt class="col-sm-3">Book Author</dt>
-                                        <dd class="col-sm-9">{{ $books->book_author }}</dd>
+                                        <dd class="col-sm-9">{{ isset($books['book_author']) ? $books['book_author'] : $books['author'] }}</dd>
                                         <dt class="col-sm-3">ISBN</dt>
-                                        <dd class="col-sm-9">{{ $books->isbn }}</dd>
+                                        <dd class="col-sm-9">{{ isset($books['isbn']) ? $books['isbn'] : $books['isbn'] }}</dd>
                                         <dt class="col-sm-3">Genre</dt>
-                                        <dd class="col-sm-9">{{ $books->genre }}</dd>
+                                        <dd class="col-sm-9">{{ isset($books['genre']) ? $books['genre'] : $books['genre'] }}</dd>
                                     </dl>
                                     <div class="mb-3">
                                        
                                             <var class="price h3 text-success">
-                                                <span class="currency">{{ config('settings.currency_symbol') }}</span><span class="num" id="productPrice">{{ $books->book_price }}</span>
+                                                <span class="currency">{{ config('settings.currency_symbol') }}</span><span class="num" id="productPrice">{{ isset($books['book_price']) ?  $books['book_price'] : 'N/A' }}</span>
                                             </var>
                                     </div>
                                     <hr>
@@ -92,7 +96,7 @@
                 <div class="col-md-12">
                     <article class="card mt-4">
                         <div class="card-body">
-                        Publication Date: {!!  $books->publication_date !!}
+                        Publication Date: {!!  isset($books['publication_date']) ? $books['publication_date'] : 'N/A' !!}
                         </div>
                     </article>
                 </div>

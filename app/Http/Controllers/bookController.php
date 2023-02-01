@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\book;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
+
 
 
 class bookController extends Controller
@@ -20,7 +22,7 @@ class bookController extends Controller
             $searchText = $_GET['searchText'];
             // $books = DB::table('books')->where('book_name','LIKE','%'.$searchText.'%');
             $books = book::where('book_name','LIKE','%'.$searchText.'%');
-            return view('home',['books'=>$books]);
+            return view('book',['books'=>$books]);
         }
     }
 
@@ -31,7 +33,7 @@ class bookController extends Controller
             $books = book::where('book_name','LIKE','%'.$searchText.'%')->get();
             return view('books',['books'=>$books]);
         }else{
-            //$data = Http::get('https://fakerapi.it/api/v1/books?_quantity=100')->json();
+            $data = Http::withOptions(['verify' => false])->get('https://fakerapi.it/api/v1/books?_quantity=100')->json();
             $books = book::all();
         }
         
@@ -98,15 +100,6 @@ class bookController extends Controller
     {
         $books = book::find($id);
         return view('updateBook',['books'=>$books]);
-        // return view('updateBook',['books'=>$books]);
-
-        // $books = book::all();
-    }
-
-    public function details($id)
-    {
-        $books = book::find($id);
-        return view('detailPage',['books'=>$books]);
         // return view('updateBook',['books'=>$books]);
 
         // $books = book::all();
