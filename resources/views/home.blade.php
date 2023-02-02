@@ -3,13 +3,20 @@
 @section('content')
     <form action="home" method="get">
         <div class="row">
-            <div class="col-3"></div>
-            <div class="col-6">
+            <div class="col-2"></div>
+            <div class="col-4">
+                <p>Working on button click</p>
                 <div class="input-group mb-3">
-                    <input id="search" class="form-control js-example-basic-single" placeholder="Search Book..." aria-label="Search Book" aria-describedby="basic-addon2" name="searchText">
+                    <input id="search" class="form-control" placeholder="Search Book..." aria-label="Search Book" aria-describedby="basic-addon2" name="searchText">
                     <div class="input-group-append">
                       <button class="btn btn-outline-primary" type="submit">Search</button>
                     </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <p>Select Search -</p>
+                <div class="input-group mb-3">
+                    <input id="" class="form-control js-example-basic-single" placeholder="Search Book..." aria-label="Search Book" aria-describedby="basic-addon2">
                 </div>
             </div>
         </div>

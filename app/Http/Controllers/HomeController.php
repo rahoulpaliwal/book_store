@@ -19,9 +19,10 @@ class HomeController extends Controller
     {
         if(isset($_GET['searchText'])){
             $searchText = $_GET['searchText'];
+            $books = collect();
+            if($searchText != "")
             $books = book::where('book_name','LIKE','%'.$searchText.'%')->get();
             if($books->isEmpty()){
-                $books = [];
                 $dataArray = Http::withOptions(['verify' => false])->get('https://fakerapi.it/api/v1/books?_quantity=100')->json();
                 //$data = file_get_contents(storage_path() . '/apiResponses/books.json');
                 foreach($dataArray['data'] AS $index=>$json) {
