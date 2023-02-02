@@ -23,7 +23,7 @@
                     <img class="card-img-top" src="{{asset('images/'.$book['book_image'])}}" alt="Card image cap"
                         width="100px" height="250px">
                     @else
-                    <img class="card-img-top" src="{{$books['image']}}" alt="Card image cap"
+                    <img class="card-img-top" src="{{$book['image']}}" alt="Card image cap"
                         width="100px" height="250px">
                     @endif
                     <div class="card-body">
@@ -49,10 +49,9 @@
 </div>
 <script type="text/javascript">
 	var route = "{{ url('autocomplete-search') }}";
-    $('.js-example-basic-single').select2({
+    var select2 = $('.js-example-basic-single').select2({
         minimumInputLength: 1,
         tags: [],
-        allowClear: true,
         minimumResultsForSearch: -1,
         ajax: {
             type: "get",
@@ -86,6 +85,22 @@
             }
         }
     });
+
+    select2.onSelect = (function(fn) {
+        return function(data, options) {
+            var target;
+            
+            if (options != null) {
+                target = $(options.target);
+            }
+            
+            if (target && target.hasClass('info')) {
+                alert('click!');
+            } else {
+                return fn.apply(this, arguments);
+            }
+        }
+    })(select2.onSelect);
     $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
 
 </script>
