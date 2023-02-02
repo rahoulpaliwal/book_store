@@ -30,7 +30,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/home/book-details/{id}', [homeController::class, 'details']);
 Route::get('/ajax-search','HomeController@search');
-Route::get('/search-home', [homeController::class, 'searchHome']);
+Route::get('/autocomplete-search', [homeController::class, 'autocompleteSearch']);
 
 
 Route::get('books', [bookController::class, 'index'])->name('books');

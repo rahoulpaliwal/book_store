@@ -115,7 +115,8 @@ class HomeController extends Controller
     {
         $books = book::find($id);
         if(!$books){
-            $data = file_get_contents(storage_path() . '/apiResponses/books.json');
+            $data = Http::withOptions(['verify' => false])->get('https://fakerapi.it/api/v1/books?_quantity=100')->json();
+            //$data = file_get_contents(storage_path() . '/apiResponses/books.json');
             $dataArray = json_decode($data,true);
 
             foreach($dataArray['data'] AS $index=>$json) {
@@ -130,46 +131,21 @@ class HomeController extends Controller
         // $books = book::all();
     }
 
-    public function searchHome(Request $request)
-    {   
-        if(isset($_GET['searchText'])){
-            $searchText = $_GET['searchText'];
-            // $books = DB::table('books')->where('book_name','LIKE','%'.$searchText.'%');
-            $books = book::where('book_name','LIKE','%'.$searchText.'%');
-            if($books->isEmpty()){
-                //$data = Http::withOptions(['verify' => false])->get('https://fakerapi.it/api/v1/books?_quantity=100')->json();
-                $data = file_get_contents(storage_path() . '/apiResponses/books.json');
-                $dataArray = json_decode($data,true);
-
-                foreach($dataArray['data'] AS $index=>$json) {
-                    if(Str::contains(strtolower($json['title']), strtolower($searchText))) {
-                        $books = $json;
-                    }
-                }
-            }
-            return view('home',['books'=>$books]);
-        }
-    }
-
-    public function search(Request $request)
+    public function autocompleteSearch(Request $request)
     {
-        if($request->ajax())
-        {
-            $output="";
-            //$products=DB::table('products')->where('title','LIKE','%'.$request->search."%")->get();
-            $books = book::where('book_name','LIKE','%'.$request->search."%")->get();
-            if(!$books){
-                //$data = Http::withOptions(['verify' => false])->get('https://fakerapi.it/api/v1/books?_quantity=100')->json();
-                $data = file_get_contents(storage_path() . '/apiResponses/books.json');
-                $dataArray = json_decode($data,true);
-
-                foreach($dataArray['data'] AS $index=>$json) {
-                    if(Str::contains($json['title'], $request->search)) {
-                        $books = $json;
-                    }
+          $query = $request->get('query');
+          $books = book::where('book_name', 'LIKE', '%'. $query. '%')->get();
+          if($books->isEmpty()){
+            $books = [];
+            $data = Http::withOptions(['verify' => false])->get('https://fakerapi.it/api/v1/books?_quantity=100')->json();
+            //$data = file_get_contents(storage_path() . '/apiResponses/books.json');
+            $dataArray = json_decode($data,true);
+            foreach($dataArray['data'] AS $index=>$json) {
+                if(Str::contains(strtolower($json['title']), strtolower($query))) {
+                    $books[] = $json;
                 }
             }
-            return Response($books);
         }
-    }
+          return response()->json($books);
+    } 
 }

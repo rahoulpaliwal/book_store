@@ -6,7 +6,7 @@
             <div class="col-3"></div>
             <div class="col-6">
                 <div class="input-group mb-3">
-                    <input type="text" id="search" class="form-control" placeholder="Search Book..." aria-label="Search Book" aria-describedby="basic-addon2" name="searchText">
+                    <input id="search" class="form-control js-example-basic-single" placeholder="Search Book..." aria-label="Search Book" aria-describedby="basic-addon2" name="searchText">
                     <div class="input-group-append">
                       <button class="btn btn-outline-primary" type="submit">Search</button>
                     </div>
@@ -48,21 +48,43 @@
 </div>
 </div>
 <script type="text/javascript">
-	$(document).ready(function() {
-        $("#search-box").keyup(function() {
-            $(".img-url").show();
-            $.ajax({
-                type : "POST",
-                url : "ajax-endpoint/get-search-result.php",
-                data : 'keyword=' + $(this).val(),
-                success : function(data) {
-                    $("#suggesstion-box").show();
-                    $("#suggesstion-box").html(data);
-                    $("#search-box").css("background", "#FFF");
-
+	var route = "{{ url('autocomplete-search') }}";
+    $('.js-example-basic-single').select2({
+        minimumInputLength: 1,
+        tags: [],
+        allowClear: true,
+        minimumResultsForSearch: -1,
+        ajax: {
+            type: "get",
+            url: route, // path to function
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+            cache: false,
+            data: function (params) {
+                var query = {
+                    query: params.term,
+                    type: 'public'
                 }
-            });
-        });
+            // Query parameters will be ?search=[term]&type=public
+            return query;
+            },
+            processResults: function (data) {
+                // Transforms the top-level key of the response object from 'items' to 'results'
+                var jsonArr = [];
+                if(typeof data[0]['title'] !== 'undefined') {
+                    for (var i=0; i<data.length; i++) {
+                        jsonArr.push({id: data[i]['id'],text: data[i]['title']});
+                    }
+                }else{
+                    for (var i=0; i<data.length; i++) {
+                        jsonArr.push({id: data[i]['bid'],text: data[i]['book_name']});
+                    }
+                }
+                console.log(jsonArr);
+                return {
+                    results: jsonArr
+                };
+            }
+        }
     });
     $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
 
