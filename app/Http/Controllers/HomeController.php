@@ -19,12 +19,12 @@ class HomeController extends Controller
     {
         if(isset($_GET['searchText'])){
             $searchText = $_GET['searchText'];
+            $books = collect();
+            if($searchText != "")
             $books = book::where('book_name','LIKE','%'.$searchText.'%')->get();
             if($books->isEmpty()){
-                $books = [];
-                $data = Http::withOptions(['verify' => false])->get('https://fakerapi.it/api/v1/books?_quantity=100')->json();
+                $dataArray = Http::withOptions(['verify' => false])->get('https://fakerapi.it/api/v1/books?_quantity=100')->json();
                 //$data = file_get_contents(storage_path() . '/apiResponses/books.json');
-                $dataArray = json_decode($data,true);
                 foreach($dataArray['data'] AS $index=>$json) {
                     if(Str::contains(strtolower($json['title']), strtolower($searchText))) {
                         $books[] = $json;
@@ -34,10 +34,8 @@ class HomeController extends Controller
             $books = $this->paginate($books);
             return view('home',compact('books'));
         }else{
-            $data = Http::withOptions(['verify' => false])->get('https://fakerapi.it/api/v1/books?_quantity=100')->json();
+            $dataArray = Http::withOptions(['verify' => false])->get('https://fakerapi.it/api/v1/books?_quantity=100')->json();
             //$data = file_get_contents(storage_path() . '/apiResponses/books.json');
-            $dataArray = json_decode($data,true);
-            
             $books = book::all();
             $books = json_decode($books,true);
             $books = $this->paginate(array_merge($books,$dataArray['data']));
@@ -115,9 +113,8 @@ class HomeController extends Controller
     {
         $books = book::find($id);
         if(!$books){
-            $data = Http::withOptions(['verify' => false])->get('https://fakerapi.it/api/v1/books?_quantity=100')->json();
+            $dataArray = Http::withOptions(['verify' => false])->get('https://fakerapi.it/api/v1/books?_quantity=100')->json();
             //$data = file_get_contents(storage_path() . '/apiResponses/books.json');
-            $dataArray = json_decode($data,true);
 
             foreach($dataArray['data'] AS $index=>$json) {
                 if($json['id'] == $id) {
@@ -137,9 +134,8 @@ class HomeController extends Controller
           $books = book::where('book_name', 'LIKE', '%'. $query. '%')->get();
           if($books->isEmpty()){
             $books = [];
-            $data = Http::withOptions(['verify' => false])->get('https://fakerapi.it/api/v1/books?_quantity=100')->json();
+            $dataArray = Http::withOptions(['verify' => false])->get('https://fakerapi.it/api/v1/books?_quantity=100')->json();
             //$data = file_get_contents(storage_path() . '/apiResponses/books.json');
-            $dataArray = json_decode($data,true);
             foreach($dataArray['data'] AS $index=>$json) {
                 if(Str::contains(strtolower($json['title']), strtolower($query))) {
                     $books[] = $json;

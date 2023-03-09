@@ -33,7 +33,7 @@ class bookController extends Controller
             $books = book::where('book_name','LIKE','%'.$searchText.'%')->get();
             return view('books',['books'=>$books]);
         }else{
-            $data = Http::withOptions(['verify' => false])->get('https://fakerapi.it/api/v1/books?_quantity=100')->json();
+            //$data = Http::withOptions(['verify' => false])->get('https://fakerapi.it/api/v1/books?_quantity=100')->json();
             $books = book::all();
         }
         
